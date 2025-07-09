@@ -29,7 +29,6 @@ landing_page = """
 def start_chrome_driver(user_data: str):
     options = ChromeOptions()
     options.add_argument(f"--user-data-dir={user_data}")
-    options.add_argument("--remote-debugging-port=9222")
     start_chrome(options=options)
 
 

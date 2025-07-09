@@ -1,6 +1,7 @@
 config.json
 bulk_sender/index.html
 .profile
+.idea
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

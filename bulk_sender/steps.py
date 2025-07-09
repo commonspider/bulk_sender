@@ -5,6 +5,7 @@ from typing import Callable, Sequence, Text
 import pandas
 from dash import callback, Output, Input, State
 from dash.dcc import Store, Upload
+from dash.exceptions import PreventUpdate
 from dash_mantine_components import Button, TextInput, Textarea, Code, Card
 from pandas import DataFrame
 
@@ -156,13 +157,15 @@ def callback_select_contacts(_, selection: str, name_col: str, surname_col: str,
         elif len(parts) == 2:
             rows.extend(range(int(parts[0]), int(parts[1]) + 1))
         else:
-            return {"caption": "Selezione invalida"}
+            log("Selezione invalida")
+            raise PreventUpdate
     try:
         name_i = contacts["head"].index(name_col)
         surname_i = contacts["head"].index(surname_col)
         phone_i = contacts["head"].index(phone_col)
     except ValueError:
-        return {"caption": "Colonna non trovata"}
+        log("Colonna non trovata")
+        raise PreventUpdate
     body = []
     for row in contacts["body"]:
         if int(row[0]) not in rows:
@@ -186,7 +189,6 @@ def send_messages():
             "(Esempio: Ciao {Nome}! Come stai?)",
             Button("INVIA!", id="button_send_messages"),
             "Invia tutto e ciaone!",
-            Code("", id="code_logs"),
         ]
     )
 
