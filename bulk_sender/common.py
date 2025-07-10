@@ -1,40 +1,19 @@
-import json
-from pathlib import Path
-
 from dash import callback, Output, Input, State, set_props
 from dash.dcc import Store
 from dash_mantine_components import Code
+from selenium.webdriver.remote.webdriver import WebDriver
+from wautils import start_driver
 
-# Config
-config = {
-    "whatsapp_url": "https://web.whatsapp.com/",
-    "button_file": "File",
-    "button_download": "Scarica",
-    "button_extension": "Valori separati da virgola",
-    "col_name": "Nome",
-    "col_surname": "Cognome",
-    "col_phone": "Numero di Telefono",
-}
+# Driver
+driver: list[WebDriver | None] = [None]
 
 
-def load_config(path: str):
-    if Path(path).exists():
-        with open(path) as f:
-            config.update(json.load(f))
-    config["config_path"] = path
-    return config
+def driver_init(**kwargs):
+    driver[0] = start_driver(**kwargs)
 
 
-def update_config(**values):
-    config.update(values)
-
-
-def save_config():
-    copy = config.copy()
-    path = copy.pop("config_path")
-    data = json.dumps(copy, indent=4)
-    with open(path, "w") as f:
-        f.write(data)
+def get_driver() -> WebDriver:
+    return driver[0]
 
 
 # Logger

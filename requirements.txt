@@ -1,5 +1,6 @@
-helium
-selenium
+--extra-index-url https://test.pypi.org/simple/
 pandas
-dash
+dash[diskcache]
 dash-mantine-components
+pillow
+wautils==0.1

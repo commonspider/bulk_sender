@@ -1,17 +1,19 @@
+import uuid
 from typing import Any
 
 from dash import Dash
+from dash.dcc import Store
 from dash_mantine_components import MantineProvider, Table, Accordion, AccordionItem, Stack, AccordionControl, \
     AccordionPanel, SimpleGrid, Title
 
-from .steps import steps
 from .common import logger, appender, log
+from .steps import steps
 
 
 def create_app():
     app = Dash(on_error=error_handler)
     app.layout = MantineProvider(
-        forceColorScheme="dark",
+        #forceColorScheme="dark",
         children=SimpleGrid(
             cols=2,
             children=[
